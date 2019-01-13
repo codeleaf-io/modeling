@@ -26,4 +26,33 @@ public final class ListWithType extends ValueWithType<List<? extends ValueWithTy
         return (ListType<?>) super.getType();
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 250193 + Objects.hashCode(getType());
+        for (ValueWithType<?> item : getValue()) {
+            hash += Objects.hashCode(item);
+        }
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof ListWithType)) {
+            return false;
+        }
+        ListWithType other = (ListWithType) obj;
+        if (getValue().size() != other.getValue().size() || !Objects.equals(getType(), other.getType())) {
+            return false;
+        }
+        for (int i = 0; i < getValue().size(); i++) {
+            if (!(Objects.equals(getValue().get(i), other.getValue().get(i)))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

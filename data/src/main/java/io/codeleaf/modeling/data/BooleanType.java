@@ -7,4 +7,19 @@ public final class BooleanType implements ValueType {
         return Boolean.class;
     }
 
+    @Override
+    public String toString() {
+        return "BooleanType";
+    }
+
+    @Override
+    public int hashCode() {
+        return 97;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof BooleanType;
+    }
+
 }

@@ -25,4 +25,20 @@ public final class ListType<I extends ValueType> implements ValueType {
         return List.class;
     }
 
+    @Override
+    public String toString() {
+        return String.format("ListType(%s)", itemValueType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(71, itemValueType);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ListType &&
+                Objects.equals(((ListType<?>) obj).itemValueType, itemValueType);
+    }
+
 }

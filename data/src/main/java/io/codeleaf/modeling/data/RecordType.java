@@ -1,9 +1,6 @@
 package io.codeleaf.modeling.data;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class RecordType implements ValueType {
 
@@ -59,6 +56,37 @@ public final class RecordType implements ValueType {
     @Override
     public Class<?> getValueClass() {
         return Map.class;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("RecordType(%s, %s)", fieldTypes, requiredFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(57, fieldTypes, requiredFields);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof RecordType)) {
+            return false;
+        }
+        RecordType other = (RecordType) obj;
+        if (fieldTypes.size() != other.fieldTypes.size()) {
+            return false;
+        }
+        for (String fieldName : fieldTypes.keySet()) {
+            if (!Objects.equals(fieldTypes.get(fieldName), other.fieldTypes.get(fieldName))
+                || requiredFields.get(fieldName) != other.requiredFields.get(fieldName)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

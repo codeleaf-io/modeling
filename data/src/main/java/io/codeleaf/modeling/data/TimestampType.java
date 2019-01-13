@@ -7,4 +7,19 @@ public final class TimestampType implements ValueType {
         return Long.class;
     }
 
+    @Override
+    public String toString() {
+        return "TimestampType";
+    }
+
+    @Override
+    public int hashCode() {
+        return 37;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof TimestampType;
+    }
+
 }
