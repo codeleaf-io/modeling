@@ -13,4 +13,13 @@
     <name>Model :: Data</name>
     <description>Definitions for modeling data</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.codeleaf.common</groupId>
+            <artifactId>common-libs-test</artifactId>
+            <version>${leaf-common.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>

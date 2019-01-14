@@ -1,20 +1,35 @@
 package io.codeleaf.modeling.data;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class ListWithType extends ValueWithType<List<? extends ValueWithType<?>>> {
 
-    public static ListWithType create(List<? extends ValueWithType<?>> value, ValueType itemValueType) {
-        Objects.requireNonNull(value);
+    public static ListWithType create(ValueType itemValueType, List<? extends ValueWithType<?>> value) {
         Objects.requireNonNull(itemValueType);
-        return new ListWithType(value, ListType.create(itemValueType));
+        Objects.requireNonNull(value);
+        return create(value, ListType.create(itemValueType));
+    }
+
+    public static ListWithType create(ValueType itemValueType, ValueWithType<?>... value) {
+        Objects.requireNonNull(itemValueType);
+        List<ValueWithType<?>> listValue;
+        if (value == null) {
+            listValue = Collections.emptyList();
+        } else {
+            for (ValueWithType<?> providedValue : value) {
+                if (!itemValueType.equals(providedValue.getType())) {
+                    throw new IllegalArgumentException("Invalid type specified as value!");
+                }
+            }
+            listValue = Arrays.asList(value);
+        }
+        return create(listValue, ListType.create(itemValueType));
     }
 
     public static ListWithType create(List<? extends ValueWithType<?>> value, ListType<?> listType) {
         Objects.requireNonNull(value);
         Objects.requireNonNull(listType);
-        return new ListWithType(value, listType);
+        return new ListWithType(Collections.unmodifiableList(new ArrayList<>(value)), listType);
     }
 
     private ListWithType(List<? extends ValueWithType<?>> value, ListType<?> listType) {
