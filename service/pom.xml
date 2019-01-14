@@ -1,0 +1,24 @@
+<project>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.codeleaf.modeling</groupId>
+        <artifactId>modeling</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>modeling-service</artifactId>
+
+    <name>Model :: Service</name>
+    <description>Definitions for modeling services</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>modeling-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

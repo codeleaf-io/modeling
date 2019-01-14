@@ -1,0 +1,41 @@
+<project>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.codeleaf.release</groupId>
+        <artifactId>release</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <groupId>io.codeleaf.modeling</groupId>
+    <artifactId>modeling</artifactId>
+    <version>0.1.0</version>
+
+    <packaging>pom</packaging>
+
+    <name>Modeling Library</name>
+    <description>Library for defining models</description>
+
+    <modules>
+        <module>data</module>
+        <module>service</module>
+    </modules>
+
+    <developers>
+        <developer>
+            <name>Deepak Shingan</name>
+            <email>deepak.shingan@gmail.com</email>
+            <organization>Deepak Shingan</organization>
+        </developer>
+        <developer>
+            <name>Tom Burger</name>
+            <email>tvburger@gmail.com</email>
+            <organization>TVBurger B.V.</organization>
+            <organizationUrl>http://www.tvburger.net/</organizationUrl>
+        </developer>
+    </developers>
+
+</project>
+
+
