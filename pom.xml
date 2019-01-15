@@ -20,6 +20,7 @@
     <modules>
         <module>data</module>
         <module>service</module>
+        <module>task</module>
     </modules>
 
     <developers>
