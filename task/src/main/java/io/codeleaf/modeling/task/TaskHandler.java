@@ -1,9 +1,9 @@
 package io.codeleaf.modeling.task;
 
-public interface TaskExecutor {
+public interface TaskHandler {
 
     <T extends Task<?>> boolean supportsTaskType(Class<T> taskTypeClass);
 
-    <O> O executeTask(Task<O> task) throws TaskExecutionException;
+    <O> O handleTask(Task<O> task) throws TaskHandlingException;
 
 }

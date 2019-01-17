@@ -1,20 +1,20 @@
 package io.codeleaf.modeling.task;
 
-public final class UnsupportedTaskException extends TaskExecutionException {
+public final class UnsupportedTaskException extends TaskHandlingException {
 
-    private final TaskExecutor taskExecutor;
+    private final TaskHandler taskHandler;
 
-    public UnsupportedTaskException(Task task, TaskExecutor taskExecutor) {
+    public UnsupportedTaskException(Task task, TaskHandler taskHandler) {
         super(task, getMessage(task));
-        this.taskExecutor = taskExecutor;
+        this.taskHandler = taskHandler;
     }
 
     private static String getMessage(Task task) {
         return task == null ? "No null task allowed!" : "Task is not supported: " + task.getClass();
     }
 
-    public TaskExecutor getTaskExecutor() {
-        return taskExecutor;
+    public TaskHandler getTaskHandler() {
+        return taskHandler;
     }
 
 }
