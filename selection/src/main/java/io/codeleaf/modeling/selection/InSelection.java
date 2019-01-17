@@ -4,6 +4,7 @@ import java.util.*;
 
 public final class InSelection<T> implements Selection {
 
+    @SafeVarargs
     public static <T> InSelection<T> create(T... values) {
         Objects.requireNonNull(values);
         if (values.length == 0) {

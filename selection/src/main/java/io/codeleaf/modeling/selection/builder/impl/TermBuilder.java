@@ -1,51 +1,52 @@
-package io.codeleaf.modeling.selection.builder;
+package io.codeleaf.modeling.selection.builder.impl;
 
 import io.codeleaf.modeling.selection.*;
 
-public final class TermBuilder<F, T> {
+public final class TermBuilder<F, V, T> {
 
     private final T returnValue;
     private final Selectable selectable;
 
-    TermBuilder(T returnValue, Selectable selectable) {
+    public TermBuilder(T returnValue, Selectable selectable) {
         this.returnValue = returnValue;
         this.selectable = selectable;
     }
 
-    public TermBuilder<F, GroupBuilder<F, T>> beginGroup() {
-        GroupBuilderImpl<F, T> groupBuilder = new GroupBuilderImpl<>(returnValue, selectable);
+    public TermBuilder<F, V, GroupBuilder<F, V, T>> beginGroup() {
+        SelectingGroupBuilder<F, V, T> groupBuilder = new SelectingGroupBuilder<>(returnValue, selectable);
         return new TermBuilder<>(groupBuilder, groupBuilder);
     }
 
-    public TermBuilder<F, T> field(F fieldName) {
+    public TermBuilder<F, V, T> field(F fieldName) {
         return new TermBuilder<>(returnValue, (selection) -> selectable.select(FieldSelection.create(fieldName, selection)));
     }
 
-    public TermBuilder<F, T> not() {
+    public TermBuilder<F, V, T> not() {
         return new TermBuilder<>(returnValue, (selection) -> selectable.select(NotSelection.create(selection)));
     }
 
-    public <O> T smallerThan(O value) {
+    public T smallerThan(V value) {
         selectable.select(new SmallerThanSelection<>(value));
         return returnValue;
     }
 
-    public <O> T equalTo(O value) {
+    public T equalTo(V value) {
         selectable.select(new EqualToSelection<>(value));
         return returnValue;
     }
 
-    public <O> T greaterThan(O value) {
+    public T greaterThan(V value) {
         selectable.select(new GreaterThanSelection<>(value));
         return returnValue;
     }
 
-    public <O> T inRange(O startIncl, O endExcl) {
+    public T inRange(V startIncl, V endExcl) {
         selectable.select(new InRangeSelection<>(startIncl, endExcl));
         return returnValue;
     }
 
-    public <O> T in(O... value) {
+    @SafeVarargs
+    public final T in(V... value) {
         selectable.select(InSelection.create(value));
         return returnValue;
     }

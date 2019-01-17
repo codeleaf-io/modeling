@@ -1,4 +1,4 @@
-package io.codeleaf.modeling.selection.builder;
+package io.codeleaf.modeling.selection.builder.impl;
 
 import io.codeleaf.modeling.selection.Selectable;
 import io.codeleaf.modeling.selection.Selection;
@@ -7,33 +7,29 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractCombinationBuilder<F, T, C extends CombinationBuilder<F, C>> implements CombinationBuilder<F, C>, Selectable {
+public abstract class AbstractCombinationBuilder<F, V, C extends CombinationBuilder<F, V, C>> implements CombinationBuilder<F, V, C>, Selectable {
 
     private enum Operator {
         AND,
         OR
     }
 
-    private final T returnValue;
-    private final Selectable selectable;
     private final List<Selection> selections = new LinkedList<>();
     private final List<Operator> operators = new LinkedList<>();
 
-    AbstractCombinationBuilder(T returnValue, Selectable selectable) {
-        this.returnValue = returnValue;
-        this.selectable = selectable;
+    AbstractCombinationBuilder() {
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final TermBuilder<F, C> and() {
+    public final TermBuilder<F, V, C> and() {
         operators.add(Operator.AND);
         return new TermBuilder<>((C) this, this);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final TermBuilder<F, C> or() {
+    public final TermBuilder<F, V, C> or() {
         operators.add(Operator.OR);
         return new TermBuilder<>((C) this, this);
     }
@@ -43,25 +39,22 @@ public abstract class AbstractCombinationBuilder<F, T, C extends CombinationBuil
         selections.add(selection);
     }
 
-    protected final T end() {
-        selectable.select(buildSelection());
-        return returnValue;
+    public Selection getSelection() {
+        Selection selection;
+        if (selections.isEmpty()) {
+            selection = null;
+        } else if (selections.size() != operators.size() + 1) {
+            throw new IllegalStateException("We have invalid amount of selections with operators!");
+        } else if (selections.size() == 1) {
+            selection = selections.get(0);
+        } else {
+            selection = buildSelection();
+        }
+        return selection;
     }
 
     private Selection buildSelection() {
-        if (selections.isEmpty()) {
-            throw new IllegalStateException("We must have at least 1 selection!");
-        }
-        if (selections.size() != operators.size() + 1) {
-            throw new IllegalStateException("We have invalid amount of selections with operators!");
-        }
-        Selection selection;
-        if (selections.size() == 1) {
-            selection = selections.get(0);
-        } else {
-            throw new NotImplementedException();
-        }
-        return selection;
+        throw new NotImplementedException();
     }
 
 }
