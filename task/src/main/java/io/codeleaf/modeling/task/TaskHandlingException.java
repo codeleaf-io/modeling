@@ -1,20 +1,20 @@
 package io.codeleaf.modeling.task;
 
-public class TaskExecutionException extends Exception {
+public class TaskHandlingException extends Exception {
 
     private final Task task;
 
-    public TaskExecutionException(Task task, String message) {
+    public TaskHandlingException(Task task, String message) {
         super(message);
         this.task = task;
     }
 
-    public TaskExecutionException(Task task, String message, Throwable cause) {
+    public TaskHandlingException(Task task, String message, Throwable cause) {
         super(message, cause);
         this.task = task;
     }
 
-    public TaskExecutionException(Task task, Throwable cause) {
+    public TaskHandlingException(Task task, Throwable cause) {
         super(cause);
         this.task = task;
     }
