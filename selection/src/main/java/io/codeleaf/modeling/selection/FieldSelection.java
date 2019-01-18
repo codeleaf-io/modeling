@@ -4,12 +4,6 @@ import java.util.Objects;
 
 public final class FieldSelection<T> implements Selection {
 
-    public static <T> FieldSelection<T> create(T field, Selection selection) {
-        Objects.requireNonNull(field);
-        Objects.requireNonNull(selection);
-        return new FieldSelection<>(field, selection);
-    }
-
     private final T field;
     private final Selection selection;
 
@@ -26,4 +20,9 @@ public final class FieldSelection<T> implements Selection {
         return selection;
     }
 
+    public static <T> FieldSelection<T> create(T field, Selection selection) {
+        Objects.requireNonNull(field);
+        Objects.requireNonNull(selection);
+        return new FieldSelection<>(field, selection);
+    }
 }
