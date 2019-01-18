@@ -4,11 +4,6 @@ import java.util.Objects;
 
 public final class NotSelection implements Selection {
 
-    public static NotSelection create(Selection selection) {
-        Objects.requireNonNull(selection);
-        return new NotSelection(selection);
-    }
-
     private final Selection selection;
 
     private NotSelection(Selection selection) {
@@ -17,5 +12,10 @@ public final class NotSelection implements Selection {
 
     public Selection getSelection() {
         return selection;
+    }
+
+    public static NotSelection create(Selection selection) {
+        Objects.requireNonNull(selection);
+        return new NotSelection(selection);
     }
 }

@@ -4,15 +4,6 @@ import java.util.List;
 
 public final class AndSelection implements CombinationSelection {
 
-    public static final class Builder extends AbstractBuilder<AndSelection> {
-
-        @Override
-        protected AndSelection build(List<Selection> selections) {
-            return new AndSelection(selections);
-        }
-
-    }
-
     private final List<Selection> selections;
 
     private AndSelection(List<Selection> selections) {
@@ -24,4 +15,12 @@ public final class AndSelection implements CombinationSelection {
         return selections;
     }
 
+    public static final class Builder extends AbstractBuilder<AndSelection> {
+
+        @Override
+        protected AndSelection build(List<Selection> selections) {
+            return new AndSelection(selections);
+        }
+
+    }
 }

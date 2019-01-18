@@ -7,7 +7,7 @@ public class ValueWithType<T> {
     private final T value;
     private final ValueType type;
 
-    public ValueWithType(T value, ValueType type) {
+    protected ValueWithType(T value, ValueType type) {
         this.value = value;
         this.type = type;
     }
