@@ -7,9 +7,9 @@ public final class RecordTypeBuilder<T> {
 
     private final RecordType.Builder builder = new RecordType.Builder();
 
-    private final Function<ValueType, T> typeFunction;
+    private final Function<? super RecordType, T> typeFunction;
 
-    RecordTypeBuilder(Function<ValueType, T> typeFunction) {
+    RecordTypeBuilder(Function<? super RecordType, T> typeFunction) {
         this.typeFunction = typeFunction;
     }
 
@@ -36,8 +36,7 @@ public final class RecordTypeBuilder<T> {
         return typeFunction.apply(builder.build());
     }
 
-    public static RecordTypeBuilder<RecordType> beginRecord() {
-        return new RecordTypeBuilder<>(valueType -> (RecordType) valueType);
+    public static RecordTypeBuilder<RecordType> create() {
+        return new RecordTypeBuilder<>(recordType -> recordType);
     }
-
 }

@@ -3,7 +3,7 @@ package io.codeleaf.modeling.data;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final class ValueWithTypeBuilder<T> {
+public final class ValueWithTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
 
     private final ValueType valueType;
     private final Function<ValueWithType<?>, T> valueWithTypeFunction;
@@ -13,35 +13,13 @@ public final class ValueWithTypeBuilder<T> {
         this.valueWithTypeFunction = valueWithTypeFunction;
     }
 
+    @Override
     public T value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
         if (!valueWithType.getType().equals(valueType)) {
             throw new IllegalArgumentException("Invalid type!");
         }
         return valueWithTypeFunction.apply(valueWithType);
-    }
-
-    public T bool(boolean value) {
-        return value(new BooleanWithType(value));
-    }
-
-    public T integer(long value) {
-        return value(new IntegerWithType(value));
-    }
-
-    public T identifier(String dataType, String value) {
-        Objects.requireNonNull(dataType);
-        Objects.requireNonNull(value);
-        return value(IdentifierWithType.create(value, dataType));
-    }
-
-    public T text(String value) {
-        Objects.requireNonNull(value);
-        return value(TextWithType.create(value));
-    }
-
-    public T timestamp(long value) {
-        return value(new TimestampWithType(value));
     }
 
     public ListWithTypeBuilder<T> beginList() {

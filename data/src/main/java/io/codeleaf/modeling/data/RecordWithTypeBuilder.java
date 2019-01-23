@@ -6,10 +6,10 @@ import java.util.function.Function;
 public final class RecordWithTypeBuilder<T> {
 
     private final RecordType recordType;
-    private final Function<ValueWithType<?>, T> valueWithTypeFunction;
+    private final Function<? super RecordWithType, T> valueWithTypeFunction;
     private final RecordWithType.Builder builder;
 
-    RecordWithTypeBuilder(RecordType recordType, Function<ValueWithType<?>, T> valueWithTypeFunction) {
+    RecordWithTypeBuilder(RecordType recordType, Function<? super RecordWithType, T> valueWithTypeFunction) {
         this.recordType = recordType;
         this.valueWithTypeFunction = valueWithTypeFunction;
         builder = new RecordWithType.Builder(recordType);
@@ -30,8 +30,8 @@ public final class RecordWithTypeBuilder<T> {
         return valueWithTypeFunction.apply(builder.build());
     }
 
-    public static RecordWithTypeBuilder<RecordWithType> beginRecord(RecordType recordType) {
+    public static RecordWithTypeBuilder<RecordWithType> create(RecordType recordType) {
         Objects.requireNonNull(recordType);
-        return new RecordWithTypeBuilder<>(recordType, valueWithType -> (RecordWithType) valueWithType);
+        return new RecordWithTypeBuilder<>(recordType, recordWithType -> recordWithType);
     }
 }
