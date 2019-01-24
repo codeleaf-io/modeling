@@ -3,13 +3,13 @@ package io.codeleaf.modeling.data;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final class ListWithTypeBuilder<T> {
+public final class ListWithTypeBuilder<T> implements ScalarWithTypeBuilder<ListWithTypeBuilder<T>> {
 
     private final ListType<?> listType;
-    private final Function<ValueWithType<?>, T> valueWithTypeFunction;
+    private final Function<? super ListWithType, T> valueWithTypeFunction;
     private final ListWithType.Builder builder;
 
-    ListWithTypeBuilder(ListType<?> listType, Function<ValueWithType<?>, T> valueWithTypeFunction) {
+    ListWithTypeBuilder(ListType<?> listType, Function<? super ListWithType, T> valueWithTypeFunction) {
         this.listType = listType;
         this.valueWithTypeFunction = valueWithTypeFunction;
         builder = new ListWithType.Builder(listType);
@@ -22,29 +22,6 @@ public final class ListWithTypeBuilder<T> {
         }
         builder.withItem(valueWithType);
         return this;
-    }
-
-    public ListWithTypeBuilder<T> bool(boolean value) {
-        return value(new BooleanWithType(value));
-    }
-
-    public ListWithTypeBuilder<T> integer(long value) {
-        return value(new IntegerWithType(value));
-    }
-
-    public ListWithTypeBuilder<T> identifier(String dataType, String value) {
-        Objects.requireNonNull(dataType);
-        Objects.requireNonNull(value);
-        return value(IdentifierWithType.create(value, dataType));
-    }
-
-    public ListWithTypeBuilder<T> text(String value) {
-        Objects.requireNonNull(value);
-        return value(TextWithType.create(value));
-    }
-
-    public ListWithTypeBuilder<T> timestamp(long value) {
-        return value(new TimestampWithType(value));
     }
 
     public ListWithTypeBuilder<ListWithTypeBuilder<T>> beginList() {
@@ -71,8 +48,8 @@ public final class ListWithTypeBuilder<T> {
         return valueWithTypeFunction.apply(builder.build());
     }
 
-    public static ListWithTypeBuilder<ListWithType> beginList(ListType<?> listType) {
+    public static ListWithTypeBuilder<ListWithType> create(ListType<?> listType) {
         Objects.requireNonNull(listType);
-        return new ListWithTypeBuilder<>(listType, valueWithType -> (ListWithType) valueWithType);
+        return new ListWithTypeBuilder<>(listType, listWithType -> listWithType);
     }
 }
