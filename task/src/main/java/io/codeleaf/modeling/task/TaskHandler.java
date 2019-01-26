@@ -6,4 +6,7 @@ public interface TaskHandler {
 
     <O> O handleTask(Task<O> task) throws TaskHandlingException;
 
+    default <O> TaskCommand<O> createCommand(Task<O> task) {
+        return TaskCommand.create(this, task);
+    }
 }
