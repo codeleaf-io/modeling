@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public interface CombinationSelection {
+public interface CombinationSelection extends Selection {
 
     abstract class AbstractBuilder<S extends CombinationSelection> {
 
