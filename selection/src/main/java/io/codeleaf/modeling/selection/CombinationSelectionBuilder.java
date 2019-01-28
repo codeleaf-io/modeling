@@ -1,7 +1,5 @@
 package io.codeleaf.modeling.selection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -53,7 +51,28 @@ public final class CombinationSelectionBuilder<F, V, T> {
     }
 
     private Selection buildSelection() {
-        throw new NotImplementedException();
+        OrSelection.Builder orBuilder = new OrSelection.Builder();
+        int i = 0;
+        Selection currentSelection = selections.get(i);
+        do {
+            if (Operator.OR == operators.get(i)) {
+                orBuilder.withSelection(currentSelection);
+                i++;
+                currentSelection = selections.get(i);
+            } else {
+                AndSelection.Builder andBuilder = new AndSelection.Builder();
+                do {
+                    andBuilder.withSelection(currentSelection);
+                    i++;
+                    currentSelection = selections.get(i);
+                } while (i < operators.size() && Operator.AND == operators.get(i));
+                currentSelection = andBuilder.withSelection(currentSelection).build();
+            }
+        } while (i < operators.size());
+        OrSelection orSelection = orBuilder.withSelection(currentSelection).build();
+        return orSelection.getSelections().size() == 1
+                ? orSelection.getSelections().get(0)
+                : orSelection;
     }
 
     public static <F, V> SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, Selection>> beginGroup(Class<F> fieldType, Class<V> valueType) {

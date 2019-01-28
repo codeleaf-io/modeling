@@ -22,6 +22,10 @@ public final class ValueTypeBuilder<T> {
         return typeFunction.apply(BooleanWithType.TYPE);
     }
 
+    public EnumTypeBuilder<T> beginEnum() {
+        return new EnumTypeBuilder<>(typeFunction);
+    }
+
     public T identifier(String dataType) {
         return typeFunction.apply(IdentifierType.create(dataType));
     }

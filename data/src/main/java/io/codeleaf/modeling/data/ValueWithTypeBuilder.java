@@ -17,9 +17,17 @@ public final class ValueWithTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
     public T value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
         if (!valueWithType.getType().equals(valueType)) {
-            throw new IllegalArgumentException("Invalid type!");
+            throw new IllegalStateException("Invalid type!");
         }
         return valueWithTypeFunction.apply(valueWithType);
+    }
+
+    public T enumeration(String value) {
+        Objects.requireNonNull(value);
+        if (!(valueType instanceof EnumType)) {
+            throw new IllegalStateException("We are not an EnumType!");
+        }
+        return value(EnumWithType.create(value, (EnumType) valueType));
     }
 
     public ListWithTypeBuilder<T> beginList() {
