@@ -17,4 +17,8 @@ public final class EnumWithType extends ValueWithType<String> {
         super(value, enumType);
     }
 
+    @Override
+    public EnumType getType() {
+        return (EnumType) super.getType();
+    }
 }
