@@ -18,4 +18,8 @@ public final class IdentifierWithType extends ValueWithType<String> {
         super(value, type);
     }
 
+    @Override
+    public IdentifierType getType() {
+        return (IdentifierType) super.getType();
+    }
 }
