@@ -1,9 +1,6 @@
 package io.codeleaf.modeling.data;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public final class EnumType implements ValueType {
 
@@ -32,6 +29,17 @@ public final class EnumType implements ValueType {
     @Override
     public Class<?> getValueClass() {
         return String.class;
+    }
+
+    @Override
+    public List<MalformedValueException> getMalformedCauses(Object value) {
+        List<MalformedValueException> causes = new ArrayList<>();
+        if (!(value instanceof String)) {
+            causes.add(new MalformedValueException(value, "Not of type String!"));
+        } else if (!values.contains(value)) {
+            causes.add(new MalformedValueException(value, "Not in " + values.toString()));
+        }
+        return causes;
     }
 
     @Override

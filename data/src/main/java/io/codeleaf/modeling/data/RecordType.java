@@ -59,6 +59,33 @@ public final class RecordType implements ValueType {
     }
 
     @Override
+    public List<MalformedValueException> getMalformedCauses(Object value) {
+        List<MalformedValueException> causes = new ArrayList<>();
+        if (!(value instanceof List)) {
+            causes.add(new MalformedValueException(value, "Not of type Map!"));
+        } else {
+            for (Map.Entry<?, ?> fieldEntry : ((Map<?, ?>) value).entrySet()) {
+                Object fieldValue = fieldEntry.getValue();
+                if (!(fieldEntry.getKey() instanceof String)) {
+                    String nonStringKey = Objects.toString(fieldEntry.getKey());
+                    String classType = fieldEntry.getKey() == null ? "null" : fieldEntry.getKey().getClass().getName();
+                    causes.add(new MalformedFieldException(nonStringKey, fieldValue, "Contains non String field name " + nonStringKey + " of type " + classType));
+                } else {
+                    String field = (String) fieldEntry.getKey();
+                    if (isRequiredField(field) && fieldValue == null) {
+                        causes.add(new MalformedFieldException(field, null, "Required field " + field + " is null!"));
+                    } else {
+                        for (MalformedValueException cause : getFieldTypes().get(field).getMalformedCauses(fieldValue)) {
+                            causes.add(new MalformedFieldException(field, fieldValue, "Invalid field " + field + ": " + cause.getMessage(), cause));
+                        }
+                    }
+                }
+            }
+        }
+        return causes;
+    }
+
+    @Override
     public String toString() {
         return String.format("RecordType(%s, %s)", fieldTypes, requiredFields);
     }
@@ -82,7 +109,7 @@ public final class RecordType implements ValueType {
         }
         for (String fieldName : fieldTypes.keySet()) {
             if (!Objects.equals(fieldTypes.get(fieldName), other.fieldTypes.get(fieldName))
-                || requiredFields.get(fieldName) != other.requiredFields.get(fieldName)) {
+                    || requiredFields.get(fieldName) != other.requiredFields.get(fieldName)) {
                 return false;
             }
         }
