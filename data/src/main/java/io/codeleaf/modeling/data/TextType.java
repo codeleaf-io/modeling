@@ -1,10 +1,22 @@
 package io.codeleaf.modeling.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class TextType implements ValueType {
 
     @Override
     public Class<?> getValueClass() {
         return String.class;
+    }
+
+    @Override
+    public List<MalformedValueException> getMalformedCauses(Object value) {
+        List<MalformedValueException> causes = new ArrayList<>();
+        if (!(value instanceof String)) {
+            causes.add(new MalformedValueException(value, "Not of type String!"));
+        }
+        return causes;
     }
 
     @Override

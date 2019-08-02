@@ -1,5 +1,7 @@
 package io.codeleaf.modeling.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class IdentifierType implements ValueType {
@@ -22,6 +24,17 @@ public final class IdentifierType implements ValueType {
     @Override
     public Class<?> getValueClass() {
         return String.class;
+    }
+
+    @Override
+    public List<MalformedValueException> getMalformedCauses(Object value) {
+        List<MalformedValueException> causes = new ArrayList<>();
+        if (!(value instanceof String)) {
+            causes.add(new MalformedValueException(value, "Not of type String!"));
+        } else if (((String) value).isEmpty()) {
+            causes.add(new MalformedValueException(value, "Not allowed to be empty!"));
+        }
+        return causes;
     }
 
     @Override

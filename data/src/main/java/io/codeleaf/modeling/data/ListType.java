@@ -1,5 +1,6 @@
 package io.codeleaf.modeling.data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +24,23 @@ public final class ListType<I extends ValueType> implements ValueType {
     @Override
     public Class<?> getValueClass() {
         return List.class;
+    }
+
+    @Override
+    public List<MalformedValueException> getMalformedCauses(Object value) {
+        List<MalformedValueException> causes = new ArrayList<>();
+        if (!(value instanceof List)) {
+            causes.add(new MalformedValueException(value, "Not of type List!"));
+        } else {
+            List<?> list = ((List<?>) value);
+            for (int index = 0; index < list.size(); index++) {
+                Object item = list.get(index);
+                for (MalformedValueException cause : itemValueType.getMalformedCauses(item)) {
+                    causes.add(new MalformedItemException(index, item, "Invalid list item: " + cause.getMessage(), cause));
+                }
+            }
+        }
+        return causes;
     }
 
     @Override
