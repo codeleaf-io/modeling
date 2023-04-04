@@ -31,7 +31,6 @@ public final class RecordTypeBuilder<T> {
             throw new IllegalArgumentException("Field name is not allowed to be empty!");
         }
         return new ValueTypeBuilder<>(valueType -> {
-            System.out.println("inner withField!");
             builder.withField(fieldName, valueType, required);
             return this;
         });
