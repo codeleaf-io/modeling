@@ -42,6 +42,13 @@ public final class ValueWithTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
         return new ListWithTypeBuilder<>((ListType<?>) valueType, valueWithTypeFunction);
     }
 
+    public MapWithTypeBuilder<T> beginMap() {
+        if (!(valueType instanceof MapType)) {
+            throw new IllegalStateException("ValueType is not a Map!");
+        }
+        return new MapWithTypeBuilder<>((MapType<?>) valueType, valueWithTypeFunction);
+    }
+
     public RecordWithTypeBuilder<T> beginRecord() {
         if (!(valueType instanceof RecordType)) {
             throw new IllegalStateException("ValueType is not a Record!");
