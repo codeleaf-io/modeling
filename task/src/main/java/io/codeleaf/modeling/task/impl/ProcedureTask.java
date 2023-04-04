@@ -10,12 +10,12 @@ import java.util.*;
 public class ProcedureTask<O> implements Task<O> {
 
     private final Procedure procedure;
-    private final Class<O> outputTypeClass;
+    private final Class<O> outputType;
     private final SortedMap<String, Object> arguments;
 
-    protected ProcedureTask(Procedure procedure, Class<O> outputTypeClass, SortedMap<String, Object> arguments) {
+    protected ProcedureTask(Procedure procedure, Class<O> outputType, SortedMap<String, Object> arguments) {
         this.procedure = procedure;
-        this.outputTypeClass = outputTypeClass;
+        this.outputType = outputType;
         this.arguments = arguments;
     }
 
@@ -28,8 +28,8 @@ public class ProcedureTask<O> implements Task<O> {
     }
 
     @Override
-    public Class<O> getOutputTypeClass() {
-        return outputTypeClass;
+    public Class<O> getOutputType() {
+        return outputType;
     }
 
     public static Builder builder(Procedure procedure) {
