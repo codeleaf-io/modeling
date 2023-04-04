@@ -12,17 +12,17 @@ public final class FieldSelection<T> implements Selection {
         this.selection = selection;
     }
 
+    public static <T> FieldSelection<T> create(T field, Selection selection) {
+        Objects.requireNonNull(field);
+        Objects.requireNonNull(selection);
+        return new FieldSelection<>(field, selection);
+    }
+
     public T getField() {
         return field;
     }
 
     public Selection getSelection() {
         return selection;
-    }
-
-    public static <T> FieldSelection<T> create(T field, Selection selection) {
-        Objects.requireNonNull(field);
-        Objects.requireNonNull(selection);
-        return new FieldSelection<>(field, selection);
     }
 }

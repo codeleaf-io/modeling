@@ -16,7 +16,7 @@ public class ValueWithTypeBuilderTest {
         // When
         ValueWithType<?> result = ValueWithTypeBuilder.create(valueType)
                 .beginRecord()
-                    .field("f1").beginList().integer(1).integer(2).integer(3).endList()
+                .field("f1").beginList().integer(1).integer(2).integer(3).endList()
                 .endRecord();
 
         // Then

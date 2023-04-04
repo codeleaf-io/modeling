@@ -15,6 +15,11 @@ public final class RecordWithTypeBuilder<T> {
         builder = new RecordWithType.Builder(recordType);
     }
 
+    public static RecordWithTypeBuilder<RecordWithType> create(RecordType recordType) {
+        Objects.requireNonNull(recordType);
+        return new RecordWithTypeBuilder<>(recordType, recordWithType -> recordWithType);
+    }
+
     public ValueWithTypeBuilder<RecordWithTypeBuilder<T>> field(String fieldName) {
         Objects.requireNonNull(fieldName);
         if (!recordType.getFieldTypes().containsKey(fieldName)) {
@@ -28,10 +33,5 @@ public final class RecordWithTypeBuilder<T> {
 
     public T endRecord() {
         return valueWithTypeFunction.apply(builder.build());
-    }
-
-    public static RecordWithTypeBuilder<RecordWithType> create(RecordType recordType) {
-        Objects.requireNonNull(recordType);
-        return new RecordWithTypeBuilder<>(recordType, recordWithType -> recordWithType);
     }
 }

@@ -12,6 +12,27 @@ import java.util.Objects;
 
 public final class CompositeTaskHandler implements TaskHandler {
 
+    private final Map<Class<? extends Task<?>>, TaskHandler> taskHandlers;
+
+    public CompositeTaskHandler(Map<Class<? extends Task<?>>, TaskHandler> taskHandlers) {
+        this.taskHandlers = taskHandlers;
+    }
+
+    @Override
+    public <T extends Task<?>> boolean supportsTaskType(Class<T> taskTypeClass) {
+        return taskHandlers.containsKey(taskTypeClass);
+    }
+
+    @Override
+    public <O> O handleTask(Task<O> task) throws TaskHandlingException {
+        Objects.requireNonNull(task);
+        TaskHandler taskHandler = taskHandlers.get(task.getClass());
+        if (taskHandler == null) {
+            throw new UnsupportedTaskException(task, this);
+        }
+        return taskHandler.handleTask(task);
+    }
+
     public static final class Builder {
 
         private final Map<Class<? extends Task<?>>, TaskHandler> taskHandlers = new LinkedHashMap<>();
@@ -31,27 +52,4 @@ public final class CompositeTaskHandler implements TaskHandler {
         }
 
     }
-
-    private final Map<Class<? extends Task<?>>, TaskHandler> taskHandlers;
-
-    public CompositeTaskHandler(Map<Class<? extends Task<?>>, TaskHandler> taskHandlers) {
-        this.taskHandlers = taskHandlers;
-    }
-
-    @Override
-    public <T extends Task<?>> boolean supportsTaskType(Class<T> taskTypeClass) {
-        return taskHandlers.containsKey(taskTypeClass);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <O> O handleTask(Task<O> task) throws TaskHandlingException {
-        Objects.requireNonNull(task);
-        TaskHandler taskHandler = taskHandlers.get((Class<? extends Task<?>>) task.getClass());
-        if (taskHandler == null) {
-            throw new UnsupportedTaskException(task, this);
-        }
-        return taskHandler.handleTask(task);
-    }
-
 }

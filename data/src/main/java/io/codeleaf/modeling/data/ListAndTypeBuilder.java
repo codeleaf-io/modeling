@@ -14,6 +14,10 @@ public final class ListAndTypeBuilder<T> implements ScalarWithTypeBuilder<ListAn
         this.valueWithTypeFunction = valueWithTypeFunction;
     }
 
+    public static ListAndTypeBuilder<ListWithType> create() {
+        return new ListAndTypeBuilder<>(valueWithType -> valueWithType);
+    }
+
     @Override
     public ListAndTypeBuilder<T> value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
@@ -44,9 +48,5 @@ public final class ListAndTypeBuilder<T> implements ScalarWithTypeBuilder<ListAn
 
     public T endList() {
         return valueWithTypeFunction.apply(builder.build());
-    }
-
-    public static ListAndTypeBuilder<ListWithType> create() {
-        return new ListAndTypeBuilder<>(valueWithType -> valueWithType);
     }
 }

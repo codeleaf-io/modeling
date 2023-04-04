@@ -10,6 +10,10 @@ public interface ValueType {
         return getMalformedCauses(value).isEmpty();
     }
 
+    default void ensureWellFormed(Object value) throws MalformedValueException {
+        MalformedValueException.isWellFormed(getMalformedCauses(value));
+    }
+
     List<MalformedValueException> getMalformedCauses(Object value);
 
 }

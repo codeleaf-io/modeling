@@ -15,6 +15,10 @@ public final class EnumTypeBuilder<T> {
         this.typeFunction = typeFunction;
     }
 
+    public static EnumTypeBuilder<EnumType> create() {
+        return new EnumTypeBuilder<>(enumType -> enumType);
+    }
+
     public EnumTypeBuilder<T> withValue(String value) {
         Objects.requireNonNull(value);
         if (values.contains(value)) {
@@ -26,9 +30,5 @@ public final class EnumTypeBuilder<T> {
 
     public T endEnum() {
         return typeFunction.apply(EnumType.create(values));
-    }
-
-    public static EnumTypeBuilder<EnumType> create() {
-        return new EnumTypeBuilder<>(enumType -> enumType);
     }
 }

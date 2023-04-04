@@ -12,5 +12,12 @@
 
     <name>Model :: Task</name>
     <description>Definitions for modeling tasks</description>
-    
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>modeling-service</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

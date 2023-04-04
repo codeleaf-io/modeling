@@ -11,6 +11,10 @@ public final class ValueAndTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
         this.valueWithTypeFunction = valueWithTypeFunction;
     }
 
+    public static ValueAndTypeBuilder<ValueWithType<?>> create() {
+        return new ValueAndTypeBuilder<>(valueWithType -> valueWithType);
+    }
+
     @Override
     public T value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
@@ -23,9 +27,5 @@ public final class ValueAndTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
 
     public RecordAndTypeBuilder<T> beginRecord() {
         return new RecordAndTypeBuilder<>(valueWithTypeFunction);
-    }
-
-    public static ValueAndTypeBuilder<ValueWithType<?>> create() {
-        return new ValueAndTypeBuilder<>(valueWithType -> valueWithType);
     }
 }

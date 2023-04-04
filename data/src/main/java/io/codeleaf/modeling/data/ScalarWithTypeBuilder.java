@@ -18,6 +18,10 @@ public interface ScalarWithTypeBuilder<T> {
         return value(IdentifierWithType.create(value, dataType));
     }
 
+    default T floatingPoint(double value) {
+        return value(new FloatWithType(value));
+    }
+
     default T text(String value) {
         Objects.requireNonNull(value);
         return value(TextWithType.create(value));

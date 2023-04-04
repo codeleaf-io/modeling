@@ -10,6 +10,10 @@ public final class ValueTypeBuilder<T> {
         this.typeFunction = typeFunction;
     }
 
+    public static ValueTypeBuilder<ValueType> create() {
+        return new ValueTypeBuilder<>(valueType -> valueType);
+    }
+
     public RecordTypeBuilder<T> beginRecord() {
         return new RecordTypeBuilder<>(typeFunction);
     }
@@ -40,10 +44,6 @@ public final class ValueTypeBuilder<T> {
 
     public T timestamp() {
         return typeFunction.apply(TimestampWithType.TYPE);
-    }
-
-    public static ValueTypeBuilder<ValueType> create() {
-        return new ValueTypeBuilder<>(valueType -> valueType);
     }
 
 }

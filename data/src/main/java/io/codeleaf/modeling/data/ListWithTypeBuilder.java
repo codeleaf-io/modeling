@@ -15,6 +15,11 @@ public final class ListWithTypeBuilder<T> implements ScalarWithTypeBuilder<ListW
         builder = new ListWithType.Builder(listType);
     }
 
+    public static ListWithTypeBuilder<ListWithType> create(ListType<?> listType) {
+        Objects.requireNonNull(listType);
+        return new ListWithTypeBuilder<>(listType, listWithType -> listWithType);
+    }
+
     public ListWithTypeBuilder<T> value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
         if (!valueWithType.getType().equals(listType.getItemValueType())) {
@@ -46,10 +51,5 @@ public final class ListWithTypeBuilder<T> implements ScalarWithTypeBuilder<ListW
 
     public T endList() {
         return valueWithTypeFunction.apply(builder.build());
-    }
-
-    public static ListWithTypeBuilder<ListWithType> create(ListType<?> listType) {
-        Objects.requireNonNull(listType);
-        return new ListWithTypeBuilder<>(listType, listWithType -> listWithType);
     }
 }

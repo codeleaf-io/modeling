@@ -6,15 +6,15 @@ import java.util.Objects;
 
 public final class IdentifierType implements ValueType {
 
-    public static IdentifierType create(String dataType) {
-        Objects.requireNonNull(dataType);
-        return new IdentifierType(dataType);
-    }
-
     private final String dataType;
 
     private IdentifierType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public static IdentifierType create(String dataType) {
+        Objects.requireNonNull(dataType);
+        return new IdentifierType(dataType);
     }
 
     public String getDataType() {

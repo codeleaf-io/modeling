@@ -9,10 +9,32 @@ import java.util.TreeMap;
 
 public final class Procedure {
 
+    private final String name;
+    private final SortedMap<String, ValueType> parameters;
+    private final ValueType returnType;
+
+    private Procedure(String name, SortedMap<String, ValueType> parameters, ValueType returnType) {
+        this.name = name;
+        this.parameters = parameters;
+        this.returnType = returnType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SortedMap<String, ValueType> getParameters() {
+        return parameters;
+    }
+
+    public ValueType getReturnType() {
+        return returnType;
+    }
+
     public static final class Builder {
 
-        private String name;
         private final SortedMap<String, ValueType> parameters = new TreeMap<>();
+        private String name;
         private ValueType returnType;
 
         public Builder withName(String name) {
@@ -49,28 +71,6 @@ public final class Procedure {
             validate();
             return new Procedure(name, Collections.unmodifiableSortedMap(new TreeMap<>(parameters)), returnType);
         }
-    }
-
-    private final String name;
-    private final SortedMap<String, ValueType> parameters;
-    private final ValueType returnType;
-
-    private Procedure(String name, SortedMap<String, ValueType> parameters, ValueType returnType) {
-        this.name = name;
-        this.parameters = parameters;
-        this.returnType = returnType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public SortedMap<String, ValueType> getParameters() {
-        return parameters;
-    }
-
-    public ValueType getReturnType() {
-        return returnType;
     }
 
 }

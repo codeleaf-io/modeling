@@ -10,6 +10,14 @@ public final class SelectionBuilder<F, V, T> {
         this.selectFunction = selectFunction;
     }
 
+    public static <F, V> SelectionBuilder<F, V, Selection> create(Class<F> fieldType, Class<V> valueType) {
+        return create();
+    }
+
+    public static <F, V> SelectionBuilder<F, V, Selection> create() {
+        return new SelectionBuilder<>(selection -> selection);
+    }
+
     public SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, T>> beginGroup() {
         return new SelectionBuilder<>(selection -> new CombinationSelectionBuilder<>(selection, selectFunction));
     }
@@ -41,13 +49,5 @@ public final class SelectionBuilder<F, V, T> {
     @SafeVarargs
     public final T in(V... value) {
         return selectFunction.apply(InSelection.create(value));
-    }
-
-    public static <F, V> SelectionBuilder<F, V, Selection> create(Class<F> fieldType, Class<V> valueType) {
-        return create();
-    }
-
-    public static <F, V> SelectionBuilder<F, V, Selection> create() {
-        return new SelectionBuilder<>(selection -> selection);
     }
 }

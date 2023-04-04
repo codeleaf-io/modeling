@@ -4,6 +4,12 @@ import java.util.*;
 
 public final class EnumType implements ValueType {
 
+    private final Set<String> values;
+
+    private EnumType(Set<String> values) {
+        this.values = values;
+    }
+
     public static EnumType create(Set<String> values) {
         Objects.requireNonNull(values);
         Set<String> copy = new LinkedHashSet<>();
@@ -14,12 +20,6 @@ public final class EnumType implements ValueType {
             copy.add(value);
         }
         return new EnumType(Collections.unmodifiableSet(copy));
-    }
-
-    private final Set<String> values;
-
-    private EnumType(Set<String> values) {
-        this.values = values;
     }
 
     public Set<String> getValues() {

@@ -13,6 +13,11 @@ public final class ValueWithTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
         this.valueWithTypeFunction = valueWithTypeFunction;
     }
 
+    public static ValueWithTypeBuilder<ValueWithType<?>> create(ValueType valueType) {
+        Objects.requireNonNull(valueType);
+        return new ValueWithTypeBuilder<>(valueType, valueWithType -> valueWithType);
+    }
+
     @Override
     public T value(ValueWithType<?> valueWithType) {
         Objects.requireNonNull(valueWithType);
@@ -42,10 +47,5 @@ public final class ValueWithTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
             throw new IllegalStateException("ValueType is not a Record!");
         }
         return new RecordWithTypeBuilder<>((RecordType) valueType, valueWithTypeFunction);
-    }
-
-    public static ValueWithTypeBuilder<ValueWithType<?>> create(ValueType valueType) {
-        Objects.requireNonNull(valueType);
-        return new ValueWithTypeBuilder<>(valueType, valueWithType -> valueWithType);
     }
 }

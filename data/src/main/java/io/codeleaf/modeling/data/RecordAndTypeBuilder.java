@@ -16,6 +16,10 @@ public final class RecordAndTypeBuilder<T> {
         this.valueWithTypeFunction = valueWithTypeFunction;
     }
 
+    public static RecordAndTypeBuilder<RecordWithType> create() {
+        return new RecordAndTypeBuilder<>(recordWithType -> recordWithType);
+    }
+
     public ValueAndTypeBuilder<RecordAndTypeBuilder<T>> field(String fieldName) {
         return requiredField(fieldName);
     }
@@ -42,9 +46,5 @@ public final class RecordAndTypeBuilder<T> {
 
     public T endRecord() {
         return valueWithTypeFunction.apply(RecordWithType.create(recordFields, recordTypeBuilder.endRecord()));
-    }
-
-    public static RecordAndTypeBuilder<RecordWithType> create() {
-        return new RecordAndTypeBuilder<>(recordWithType -> recordWithType);
     }
 }

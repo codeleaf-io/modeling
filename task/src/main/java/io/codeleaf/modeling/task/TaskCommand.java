@@ -12,6 +12,12 @@ public final class TaskCommand<O> {
         this.task = task;
     }
 
+    public static <O> TaskCommand<O> create(TaskHandler taskHandler, Task<O> task) {
+        Objects.requireNonNull(taskHandler);
+        Objects.requireNonNull(task);
+        return new TaskCommand<>(taskHandler, task);
+    }
+
     public TaskHandler getTaskHandler() {
         return taskHandler;
     }
@@ -22,11 +28,5 @@ public final class TaskCommand<O> {
 
     public O invoke() throws TaskHandlingException {
         return taskHandler.handleTask(task);
-    }
-
-    public static <O> TaskCommand<O> create(TaskHandler taskHandler, Task<O> task) {
-        Objects.requireNonNull(taskHandler);
-        Objects.requireNonNull(task);
-        return new TaskCommand<>(taskHandler, task);
     }
 }

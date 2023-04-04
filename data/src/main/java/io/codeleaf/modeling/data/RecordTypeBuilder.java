@@ -13,6 +13,10 @@ public final class RecordTypeBuilder<T> {
         this.typeFunction = typeFunction;
     }
 
+    public static RecordTypeBuilder<RecordType> create() {
+        return new RecordTypeBuilder<>(recordType -> recordType);
+    }
+
     public ValueTypeBuilder<RecordTypeBuilder<T>> withRequiredField(String fieldName) {
         return withField(fieldName, true);
     }
@@ -34,9 +38,5 @@ public final class RecordTypeBuilder<T> {
 
     public T endRecord() {
         return typeFunction.apply(builder.build());
-    }
-
-    public static RecordTypeBuilder<RecordType> create() {
-        return new RecordTypeBuilder<>(recordType -> recordType);
     }
 }

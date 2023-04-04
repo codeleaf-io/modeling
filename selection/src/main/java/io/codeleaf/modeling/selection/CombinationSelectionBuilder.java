@@ -6,18 +6,20 @@ import java.util.function.Function;
 
 public final class CombinationSelectionBuilder<F, V, T> {
 
-    private enum Operator {
-        AND,
-        OR
-    }
-
     private final List<Selection> selections = new LinkedList<>();
     private final List<Operator> operators = new LinkedList<>();
     private final Function<Selection, T> selectFunction;
-
     CombinationSelectionBuilder(Selection selection, Function<Selection, T> selectFunction) {
         selections.add(selection);
         this.selectFunction = selectFunction;
+    }
+
+    public static <F, V> SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, Selection>> beginGroup(Class<F> fieldType, Class<V> valueType) {
+        return beginGroup();
+    }
+
+    public static <F, V> SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, Selection>> beginGroup() {
+        return new SelectionBuilder<>(selection -> new CombinationSelectionBuilder<>(selection, s -> s));
     }
 
     public SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, T>> and() {
@@ -75,11 +77,8 @@ public final class CombinationSelectionBuilder<F, V, T> {
                 : orSelection;
     }
 
-    public static <F, V> SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, Selection>> beginGroup(Class<F> fieldType, Class<V> valueType) {
-        return beginGroup();
-    }
-
-    public static <F, V> SelectionBuilder<F, V, CombinationSelectionBuilder<F, V, Selection>> beginGroup() {
-        return new SelectionBuilder<>(selection -> new CombinationSelectionBuilder<>(selection, s -> s));
+    private enum Operator {
+        AND,
+        OR
     }
 }

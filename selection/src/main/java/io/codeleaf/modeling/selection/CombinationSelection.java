@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public interface CombinationSelection extends Selection {
 
+    List<Selection> getSelections();
+
     abstract class AbstractBuilder<S extends CombinationSelection> {
 
         private final List<Selection> selections = new ArrayList<>();
@@ -37,7 +39,5 @@ public interface CombinationSelection extends Selection {
         protected abstract S build(List<Selection> selections);
 
     }
-
-    List<Selection> getSelections();
 
 }

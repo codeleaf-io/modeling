@@ -6,48 +6,8 @@ import java.util.*;
 
 public final class Service {
 
-    public static final class Builder {
-
-        private String name;
-        private final Set<Procedure> procedures = new LinkedHashSet<>();
-
-        public Builder withName(String name) {
-            Objects.requireNonNull(name);
-            if (name.isEmpty()) {
-                throw new IllegalArgumentException("No empty name allowed!");
-            }
-            this.name = name;
-            return this;
-        }
-
-        public Builder withProcedure(Procedure... procedure) {
-            Objects.requireNonNull(procedure);
-            for (int i = 0; i < procedure.length; i++) {
-                Objects.requireNonNull(procedure[i]);
-                procedures.add(procedure[i]);
-            }
-            return this;
-        }
-
-        private void validate() {
-            if (name == null) {
-                throw new IllegalStateException("Name must be set!");
-            }
-            if (procedures.isEmpty()) {
-                throw new IllegalStateException("Must have at least 1 procedure defined!");
-            }
-        }
-
-        public Service build() {
-            validate();
-            return new Service(name, Collections.unmodifiableSet(new LinkedHashSet<>(procedures)));
-        }
-
-    }
-
     private final String name;
     private final Set<Procedure> procedures;
-
     private Service(String name, Set<Procedure> procedures) {
         this.name = name;
         this.procedures = procedures;
@@ -90,6 +50,45 @@ public final class Service {
             }
         }
         return true;
+    }
+
+    public static final class Builder {
+
+        private final Set<Procedure> procedures = new LinkedHashSet<>();
+        private String name;
+
+        public Builder withName(String name) {
+            Objects.requireNonNull(name);
+            if (name.isEmpty()) {
+                throw new IllegalArgumentException("No empty name allowed!");
+            }
+            this.name = name;
+            return this;
+        }
+
+        public Builder withProcedure(Procedure... procedure) {
+            Objects.requireNonNull(procedure);
+            for (int i = 0; i < procedure.length; i++) {
+                Objects.requireNonNull(procedure[i]);
+                procedures.add(procedure[i]);
+            }
+            return this;
+        }
+
+        private void validate() {
+            if (name == null) {
+                throw new IllegalStateException("Name must be set!");
+            }
+            if (procedures.isEmpty()) {
+                throw new IllegalStateException("Must have at least 1 procedure defined!");
+            }
+        }
+
+        public Service build() {
+            validate();
+            return new Service(name, Collections.unmodifiableSet(new LinkedHashSet<>(procedures)));
+        }
+
     }
 
 }

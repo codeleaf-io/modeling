@@ -10,12 +10,12 @@ public final class NotSelection implements Selection {
         this.selection = selection;
     }
 
-    public Selection getSelection() {
-        return selection;
-    }
-
     public static NotSelection create(Selection selection) {
         Objects.requireNonNull(selection);
         return new NotSelection(selection);
+    }
+
+    public Selection getSelection() {
+        return selection;
     }
 }
