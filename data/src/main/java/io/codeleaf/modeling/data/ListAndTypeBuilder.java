@@ -39,6 +39,13 @@ public final class ListAndTypeBuilder<T> implements ScalarWithTypeBuilder<ListAn
         });
     }
 
+    public MapAndTypeBuilder<ListAndTypeBuilder<T>> beginMap() {
+        return new MapAndTypeBuilder<>(valueWithType -> {
+            builder.withItem(valueWithType);
+            return this;
+        });
+    }
+
     public RecordAndTypeBuilder<ListAndTypeBuilder<T>> beginRecord() {
         return new RecordAndTypeBuilder<>(valueWithType -> {
             builder.withItem(valueWithType);

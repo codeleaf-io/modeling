@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public final class RecordAndTypeBuilder<T> {
 
-    private final RecordTypeBuilder<RecordType> recordTypeBuilder = RecordTypeBuilder.create();
+    private final RecordType.Builder recordTypeBuilder = new RecordType.Builder();
     private final Map<String, ValueWithType<?>> recordFields = new LinkedHashMap<>();
 
     private final Function<? super RecordWithType, T> valueWithTypeFunction;
@@ -34,17 +34,17 @@ public final class RecordAndTypeBuilder<T> {
 
     private ValueAndTypeBuilder<RecordAndTypeBuilder<T>> field(String fieldName, boolean required) {
         Objects.requireNonNull(fieldName);
-        if (!recordFields.containsKey(fieldName)) {
+        if (recordFields.containsKey(fieldName)) {
             throw new IllegalArgumentException("Field already set: " + fieldName);
         }
         return new ValueAndTypeBuilder<>(valueWithType -> {
-            recordTypeBuilder.withField(fieldName, required);
+            recordTypeBuilder.withField(fieldName, valueWithType.getType(), required);
             recordFields.put(fieldName, valueWithType);
             return this;
         });
     }
 
     public T endRecord() {
-        return valueWithTypeFunction.apply(RecordWithType.create(recordFields, recordTypeBuilder.endRecord()));
+        return valueWithTypeFunction.apply(RecordWithType.create(recordFields, recordTypeBuilder.build()));
     }
 }

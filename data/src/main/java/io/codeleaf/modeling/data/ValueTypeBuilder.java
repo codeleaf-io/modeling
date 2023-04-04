@@ -22,12 +22,20 @@ public final class ValueTypeBuilder<T> {
         return new ValueTypeBuilder<>(valueType -> typeFunction.apply(ListType.create(valueType)));
     }
 
+    public ValueTypeBuilder<T> map() {
+        return new ValueTypeBuilder<>(valueType -> typeFunction.apply(MapType.create(valueType)));
+    }
+
     public T bool() {
         return typeFunction.apply(BooleanWithType.TYPE);
     }
 
     public EnumTypeBuilder<T> beginEnum() {
         return new EnumTypeBuilder<>(typeFunction);
+    }
+
+    public T floatingPoint() {
+        return typeFunction.apply(FloatWithType.TYPE);
     }
 
     public T identifier(String dataType) {

@@ -25,6 +25,10 @@ public final class ValueAndTypeBuilder<T> implements ScalarWithTypeBuilder<T> {
         return new ListAndTypeBuilder<>(valueWithTypeFunction);
     }
 
+    public MapAndTypeBuilder<T> beginMap() {
+        return new MapAndTypeBuilder<>(valueWithTypeFunction);
+    }
+
     public RecordAndTypeBuilder<T> beginRecord() {
         return new RecordAndTypeBuilder<>(valueWithTypeFunction);
     }
