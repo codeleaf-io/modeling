@@ -6,6 +6,19 @@ import org.junit.Test;
 public class RecordAndTypeBuilderTest {
 
     @Test
+    public void test() {
+        ValueWithType<?> valueWithType = ValueAndTypeBuilder.create()
+                .beginRecord()
+                .requiredField("identifier").identifier("virtual machine", "235325")
+                .requiredField("networks").beginList().text("20.51.55.123").text("00.25.1.2")
+                .endList()
+                .requiredField("active").bool(true)
+                .endRecord();
+
+        System.out.println(valueWithType.getType());
+        System.out.println(valueWithType.getValue());
+    }
+    @Test
     public void testBuild() {
         // When
         RecordWithType result = RecordAndTypeBuilder.create()

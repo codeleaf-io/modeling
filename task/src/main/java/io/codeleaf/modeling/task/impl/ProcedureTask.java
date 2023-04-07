@@ -7,13 +7,13 @@ import io.codeleaf.modeling.task.Task;
 
 import java.util.*;
 
-public class ProcedureTask<O> implements Task<O> {
+public final class ProcedureTask<O> implements Task<O> {
 
     private final Procedure procedure;
     private final Class<O> outputType;
     private final SortedMap<String, Object> arguments;
 
-    protected ProcedureTask(Procedure procedure, Class<O> outputType, SortedMap<String, Object> arguments) {
+    private ProcedureTask(Procedure procedure, Class<O> outputType, SortedMap<String, Object> arguments) {
         this.procedure = procedure;
         this.outputType = outputType;
         this.arguments = arguments;

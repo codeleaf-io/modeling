@@ -18,6 +18,11 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>modeling-service</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.codeleaf.common</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${leaf-common.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
