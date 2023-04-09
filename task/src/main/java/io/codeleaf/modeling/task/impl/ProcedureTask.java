@@ -19,6 +19,15 @@ public final class ProcedureTask<O> implements Task<O> {
         this.arguments = arguments;
     }
 
+    public static Builder builder(Procedure procedure) {
+        Objects.requireNonNull(procedure);
+        return new Builder(procedure);
+    }
+
+    public static ProcedureTask<?> of(Procedure procedure, Objects... arguments) {
+        return builder(procedure).create((Object[]) arguments);
+    }
+
     public Procedure getProcedure() {
         return procedure;
     }
@@ -30,15 +39,6 @@ public final class ProcedureTask<O> implements Task<O> {
     @Override
     public Class<O> getOutputType() {
         return outputType;
-    }
-
-    public static Builder builder(Procedure procedure) {
-        Objects.requireNonNull(procedure);
-        return new Builder(procedure);
-    }
-
-    public static ProcedureTask<?> of(Procedure procedure, Objects... arguments) {
-        return builder(procedure).create((Object[]) arguments);
     }
 
     public static class Builder {
