@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class IntegerWithTypeTest {
 
@@ -14,7 +14,7 @@ public class IntegerWithTypeTest {
         boolean result = integerWithType.equals(new IntegerWithType(9));
 
         // Then
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class IntegerWithTypeTest {
         boolean result = integerWithType.equals(new IntegerWithType(11));
 
         // Then
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
 }

@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.selection;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class SelectionBuilderTest {
 
@@ -11,9 +11,9 @@ public class SelectionBuilderTest {
         Selection result = SelectionBuilder.create(String.class, String.class).field("f1").equalTo("foo");
 
         // Then
-        Assert.assertTrue(result instanceof FieldSelection);
+        Assertions.assertTrue(result instanceof FieldSelection);
         Selection innerSelection = ((FieldSelection<?>) result).getSelection();
-        Assert.assertTrue(innerSelection instanceof EqualToSelection);
-        Assert.assertEquals("foo", ((EqualToSelection<?>) innerSelection).getValue());
+        Assertions.assertTrue(innerSelection instanceof EqualToSelection);
+        Assertions.assertEquals("foo", ((EqualToSelection<?>) innerSelection).getValue());
     }
 }

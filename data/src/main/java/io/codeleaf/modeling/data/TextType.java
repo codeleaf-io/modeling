@@ -3,7 +3,7 @@ package io.codeleaf.modeling.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TextType implements ValueType {
+public final class TextType implements ScalarType {
 
     @Override
     public Class<?> getValueClass() {

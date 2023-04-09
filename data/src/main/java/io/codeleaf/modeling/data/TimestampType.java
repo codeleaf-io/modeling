@@ -3,7 +3,7 @@ package io.codeleaf.modeling.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TimestampType implements ValueType {
+public final class TimestampType implements ScalarType {
 
     @Override
     public Class<?> getValueClass() {

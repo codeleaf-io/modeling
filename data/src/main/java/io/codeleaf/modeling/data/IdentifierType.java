@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class IdentifierType implements ValueType {
+public final class IdentifierType implements ScalarType {
 
     private final String dataType;
 

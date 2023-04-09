@@ -2,7 +2,7 @@ package io.codeleaf.modeling.data;
 
 import java.util.*;
 
-public final class EnumType implements ValueType {
+public final class EnumType implements ScalarType {
 
     private final Set<String> values;
 
