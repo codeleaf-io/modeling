@@ -26,6 +26,10 @@ public final class ValueTypeBuilder<T> {
         return new ValueTypeBuilder<>(valueType -> typeFunction.apply(MapType.create(valueType)));
     }
 
+    public T binary() {
+        return typeFunction.apply(BinaryWithType.TYPE);
+    }
+
     public T bool() {
         return typeFunction.apply(BooleanWithType.TYPE);
     }

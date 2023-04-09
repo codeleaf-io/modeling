@@ -24,10 +24,6 @@ public class MalformedValueException extends NumberFormatException {
         this.value = value;
     }
 
-    public Object getValue() {
-        return value;
-    }
-
     public static void isWellFormed(List<MalformedValueException> exceptions) throws MalformedValueException {
         if (exceptions == null || exceptions.isEmpty()) {
             return;
@@ -38,6 +34,10 @@ public class MalformedValueException extends NumberFormatException {
             exception.addSuppressed(exceptions.get(i));
         }
         throw exception;
+    }
+
+    public Object getValue() {
+        return value;
     }
 
 }

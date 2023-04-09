@@ -8,6 +8,7 @@ public final class Service {
 
     private final String name;
     private final Set<Procedure> procedures;
+
     private Service(String name, Set<Procedure> procedures) {
         this.name = name;
         this.procedures = procedures;

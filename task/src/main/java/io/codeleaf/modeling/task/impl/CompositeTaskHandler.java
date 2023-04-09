@@ -1,8 +1,8 @@
 package io.codeleaf.modeling.task.impl;
 
 import io.codeleaf.modeling.task.Task;
-import io.codeleaf.modeling.task.TaskHandlingException;
 import io.codeleaf.modeling.task.TaskHandler;
+import io.codeleaf.modeling.task.TaskHandlingException;
 import io.codeleaf.modeling.task.UnsupportedTaskException;
 
 import java.util.Collections;
@@ -19,12 +19,12 @@ public final class CompositeTaskHandler implements TaskHandler {
     }
 
     @Override
-    public <T extends Task<?>> boolean supportsTaskType(Class<T> taskTypeClass) {
+    public <TL extends Task<?>> boolean supportsTaskType(Class<TL> taskTypeClass) {
         return taskHandlers.containsKey(taskTypeClass);
     }
 
     @Override
-    public <O> O handleTask(Task<O> task) throws TaskHandlingException {
+    public <OL> OL handleTask(Task<OL> task) throws TaskHandlingException {
         Objects.requireNonNull(task);
         TaskHandler taskHandler = taskHandlers.get(task.getClass());
         if (taskHandler == null) {

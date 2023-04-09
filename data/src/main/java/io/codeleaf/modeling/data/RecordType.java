@@ -6,6 +6,7 @@ public final class RecordType implements ValueType {
 
     private final Map<String, ValueType> fieldTypes;
     private final Map<String, Boolean> requiredFields;
+
     private RecordType(Map<String, ValueType> fieldTypes, Map<String, Boolean> requiredFields) {
         this.fieldTypes = fieldTypes;
         this.requiredFields = requiredFields;

@@ -16,6 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>io.codeleaf.common</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${leaf-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.codeleaf.common</groupId>
             <artifactId>common-libs-test</artifactId>
             <version>${leaf-common.version}</version>
             <scope>test</scope>

@@ -1,8 +1,9 @@
 package io.codeleaf.modeling.task.impl;
 
+import io.codeleaf.common.utils.Types;
 import io.codeleaf.modeling.task.Task;
-import io.codeleaf.modeling.task.TaskHandlingException;
 import io.codeleaf.modeling.task.TaskHandler;
+import io.codeleaf.modeling.task.TaskHandlingException;
 import io.codeleaf.modeling.task.UnsupportedTaskException;
 
 import java.util.Objects;
@@ -21,18 +22,17 @@ public abstract class SingleTaskHandler<T extends Task<O>, O> implements TaskHan
 
     @Override
     public <TL extends Task<?>> boolean supportsTaskType(Class<TL> taskTypeClass) {
-        return Objects.equals((Class<?>) taskClass, (Class<?>) taskTypeClass);
+        return Objects.equals(taskClass, taskTypeClass);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public <OL> OL handleTask(Task<OL> task) throws TaskHandlingException {
         Objects.requireNonNull(task);
-        if (!supportsTaskType(task.getClass())) {
+        if (!supportsTaskType(Types.cast(task.getClass()))) {
             throw new UnsupportedTaskException(task, this);
         }
         try {
-            return (OL) doExecuteTask((T) task);
+            return task.getOutputType().cast(doExecuteTask(Types.cast(task)));
         } catch (TaskHandlingException cause) {
             if (task.equals(cause.getTask())) {
                 throw cause;

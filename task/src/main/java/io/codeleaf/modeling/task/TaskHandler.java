@@ -2,11 +2,11 @@ package io.codeleaf.modeling.task;
 
 public interface TaskHandler {
 
-    <T extends Task<?>> boolean supportsTaskType(Class<T> taskTypeClass);
+    <TL extends Task<?>> boolean supportsTaskType(Class<TL> taskTypeClass);
 
-    <O> O handleTask(Task<O> task) throws TaskHandlingException;
+    <OL> OL handleTask(Task<OL> task) throws TaskHandlingException;
 
-    default <O> TaskCommand<O> createCommand(Task<O> task) {
+    default <OL> TaskCommand<OL> createCommand(Task<OL> task) {
         return TaskCommand.create(this, task);
     }
 }

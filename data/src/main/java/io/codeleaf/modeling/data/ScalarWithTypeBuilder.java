@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public interface ScalarWithTypeBuilder<T> {
 
+    default T binary(byte[] value) {
+        return value(new BinaryWithType(value));
+    }
+
     default T bool(boolean value) {
         return value(new BooleanWithType(value));
     }

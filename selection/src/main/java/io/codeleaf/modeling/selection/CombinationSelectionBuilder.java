@@ -9,6 +9,7 @@ public final class CombinationSelectionBuilder<F, V, T> {
     private final List<Selection> selections = new LinkedList<>();
     private final List<Operator> operators = new LinkedList<>();
     private final Function<Selection, T> selectFunction;
+
     CombinationSelectionBuilder(Selection selection, Function<Selection, T> selectFunction) {
         selections.add(selection);
         this.selectFunction = selectFunction;

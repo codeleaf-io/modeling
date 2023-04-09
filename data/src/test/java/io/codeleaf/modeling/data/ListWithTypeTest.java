@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ListWithTypeTest {
 
@@ -20,7 +20,7 @@ public class ListWithTypeTest {
                 new IntegerWithType(3)));
 
         // Then
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ListWithTypeTest {
                 new IntegerWithType(10_000)));
 
         // Then
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
 }

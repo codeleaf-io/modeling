@@ -1,9 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.Map;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MapWithTypeTest {
 
@@ -24,7 +22,7 @@ public class MapWithTypeTest {
                 .build());
 
         // Then
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -44,7 +42,7 @@ public class MapWithTypeTest {
                 .build());
 
         // Then
-        Assert.assertFalse(result);
+        Assertions.assertFalse(result);
     }
 
 }

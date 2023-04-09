@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class RecordTypeBuilderTest {
                 .endRecord();
 
         // Then
-        Assert.assertEquals(Map.of("1", IntegerWithType.TYPE, "2", BooleanWithType.TYPE),
+        Assertions.assertEquals(Map.of("1", IntegerWithType.TYPE, "2", BooleanWithType.TYPE),
                 result.getFieldTypes());
     }
 }

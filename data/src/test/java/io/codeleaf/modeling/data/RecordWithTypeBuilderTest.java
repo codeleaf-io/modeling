@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RecordWithTypeBuilderTest {
 
@@ -20,7 +20,7 @@ public class RecordWithTypeBuilderTest {
                 .endRecord();
 
         // Then
-        Assert.assertEquals(5L, result.getValue().get("1").getValue());
-        Assert.assertEquals(true, result.getValue().get("2").getValue());
+        Assertions.assertEquals(5L, result.getValue().get("1").getValue());
+        Assertions.assertEquals(true, result.getValue().get("2").getValue());
     }
 }

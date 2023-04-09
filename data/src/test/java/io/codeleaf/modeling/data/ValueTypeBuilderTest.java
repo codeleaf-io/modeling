@@ -1,7 +1,7 @@
 package io.codeleaf.modeling.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -16,10 +16,10 @@ public class ValueTypeBuilderTest {
                 .endRecord();
 
         // Then
-        Assert.assertTrue(result instanceof RecordType);
+        Assertions.assertTrue(result instanceof RecordType);
         Map<String, ValueType> fieldTypes = ((RecordType) result).getFieldTypes();
-        Assert.assertEquals(2, fieldTypes.size());
-        Assert.assertEquals(ListType.create(IntegerWithType.TYPE), fieldTypes.get("f1"));
-        Assert.assertEquals(MapType.create(BooleanWithType.TYPE), fieldTypes.get("f2"));
+        Assertions.assertEquals(2, fieldTypes.size());
+        Assertions.assertEquals(ListType.create(IntegerWithType.TYPE), fieldTypes.get("f1"));
+        Assertions.assertEquals(MapType.create(BooleanWithType.TYPE), fieldTypes.get("f2"));
     }
 }
