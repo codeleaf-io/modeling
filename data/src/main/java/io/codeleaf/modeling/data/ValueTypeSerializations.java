@@ -1,6 +1,6 @@
 package io.codeleaf.modeling.data;
 
-import io.codeleaf.common.utils.StringEncodings;
+import io.codeleaf.common.utils.StringEncoder;
 
 import java.util.*;
 
@@ -15,7 +15,7 @@ public final class ValueTypeSerializations {
             value.put("type", "boolean");
         } else if (valueType instanceof EnumType) {
             value.put("type", "enum");
-            value.put("options", StringEncodings.encodeSet(((EnumType) valueType).getValues()));
+            value.put("options", StringEncoder.encodeSet(((EnumType) valueType).getValues()));
         } else if (valueType instanceof FloatType) {
             value.put("type", "float");
         } else if (valueType instanceof IdentifierType) {
@@ -40,19 +40,19 @@ public final class ValueTypeSerializations {
                     requiredFields.add(fieldType.getKey());
                 }
             }
-            value.put("fieldTypes", StringEncodings.encodeMap(fieldTypes));
-            value.put("requiredFields", StringEncodings.encodeSet(requiredFields));
+            value.put("fieldTypes", StringEncoder.encodeMap(fieldTypes));
+            value.put("requiredFields", StringEncoder.encodeSet(requiredFields));
         } else if (valueType instanceof TextType) {
             value.put("type", "text");
         } else if (valueType instanceof TimestampType) {
             value.put("type", "timestamp");
         }
-        return StringEncodings.encodeMap(value);
+        return StringEncoder.encodeMap(value);
     }
 
     public static ValueType deserialize(String serializedValueType) {
         Objects.requireNonNull(serializedValueType);
-        Map<String, String> value = StringEncodings.decodeMap(serializedValueType);
+        Map<String, String> value = StringEncoder.decodeMap(serializedValueType);
         ValueType valueType;
         String type = value.get("type");
         if (Objects.equals("byte", type)) {
@@ -60,7 +60,7 @@ public final class ValueTypeSerializations {
         } else if (Objects.equals("boolean", type)) {
             valueType = BooleanWithType.TYPE;
         } else if (Objects.equals("enum", type)) {
-            valueType = EnumType.create(StringEncodings.decodeSet(value.get("options")));
+            valueType = EnumType.create(StringEncoder.decodeSet(value.get("options")));
         } else if (Objects.equals("float", type)) {
             valueType = FloatWithType.TYPE;
         } else if (Objects.equals("identifier", type)) {
@@ -73,8 +73,8 @@ public final class ValueTypeSerializations {
             valueType = MapType.create(deserialize(value.get("entryType")));
         } else if (Objects.equals("record", type)) {
             RecordType.Builder builder = new RecordType.Builder();
-            Map<String, String> fieldTypes = StringEncodings.decodeMap(value.get("fieldTypes"));
-            Set<String> requiredFields = StringEncodings.decodeSet(value.get("requiredFields"));
+            Map<String, String> fieldTypes = StringEncoder.decodeMap(value.get("fieldTypes"));
+            Set<String> requiredFields = StringEncoder.decodeSet(value.get("requiredFields"));
             for (Map.Entry<String, String> field : fieldTypes.entrySet()) {
                 String name = field.getKey();
                 builder.withField(name, deserialize(fieldTypes.get(name)), requiredFields.contains(name));
